@@ -1,5 +1,9 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
+using Unity.XR.CoreUtils;
+using UnityEngine.InputSystem;
+using UnityEngine.XR;
 
 public class FieldManager : MonoBehaviour
 {
@@ -9,17 +13,35 @@ public class FieldManager : MonoBehaviour
     [SerializeField] private Color defaultColor = Color.white;
     private readonly Color _defaultAltColor = Color.grey;
 
+    [Header("Game Settings")]
+    [SerializeField] private int pressesPerRound = 20;
+
     [Header("Rotation Settings")]
     [SerializeField] private float rotationSpeed = 10f;
-    [SerializeField] private float rotationDuration = 2f; 
+    [SerializeField] private float rotationDuration = 2f;
     [SerializeField] private float minRotationAngle = 45f;
     [SerializeField] private float maxRotationAngle = 90f;
 
+    private DefaultInputXR _input;
+
+
+    // Game state
     private GameObject _currentTarget;
     private int _correctSelections;
+    private int _currentRound = 0;
+    private int _pressesInRound = 0;
+    private float _roundStartTime;
+    private float _roundCompletionTime;
+    private bool _isRoundActive = false;
+
+    // Rotation state
     private Quaternion _targetRotation;
     private bool _isRotating;
     private float _rotationTimer;
+
+    public event Action OnRoundStart;
+    public event Action<float> OnRoundComplete;
+    public event Action<int> OnPressUpdate;
 
     private void Start()
     {
@@ -28,12 +50,40 @@ public class FieldManager : MonoBehaviour
             Debug.LogError("No grid cubes assigned!");
             return;
         }
+        _input = new DefaultInputXR();
+        _input.Default.Enable();
+        _input.Default.ResetView.started += ResetViewOnstarted;
+        _input.Default.StartNewRound.started += StartNewRound;
+    }
+
+    public void StartNewRound(InputAction.CallbackContext ctx)
+    {
+        _currentRound++;
+        _pressesInRound = 0;
+        _roundStartTime = Time.time;
+        _isRoundActive = true;
+        _correctSelections = 0;
+
         SelectRandomCube();
         SetNewRandomRotation();
+
+        OnRoundStart?.Invoke();
+    }
+
+    private void CompleteRound()
+    {
+        _isRoundActive = false;
+        _roundCompletionTime = Time.time - _roundStartTime;
+        OnRoundComplete?.Invoke(_roundCompletionTime);
+        Debug.Log($"Round completed in {_roundCompletionTime.ToString("F2")} seconds. " +
+                 $"Accuracy: {(_correctSelections / (float)pressesPerRound) * 100f}%");
     }
 
     private void Update()
     {
+        if (!_isRoundActive) return;
+
+        // Handle rotation
         if (_isRotating)
         {
             RotateTiles();
@@ -60,12 +110,20 @@ public class FieldManager : MonoBehaviour
 
     public void HandleCubeSelection(GameObject selectedCube)
     {
-        if (_currentTarget == null || _isRotating) return;
+        if (!_isRoundActive || _currentTarget == null || _isRotating) return;
 
         if (selectedCube != _currentTarget) return;
 
         _correctSelections++;
-        Debug.Log($"Correct! Total correct: {_correctSelections}");
+        _pressesInRound++;
+        OnPressUpdate?.Invoke(_pressesInRound);
+
+        if (_pressesInRound >= pressesPerRound)
+        {
+            CompleteRound();
+            return;
+        }
+
         StartRotationAndSelectNewCube();
     }
 
@@ -74,29 +132,57 @@ public class FieldManager : MonoBehaviour
         SetNewRandomRotation();
         _isRotating = true;
         _rotationTimer = 0f;
-        // Delay selection until rot is done
         Invoke(nameof(SelectRandomCube), rotationDuration * 0.8f);
     }
 
     private void SetNewRandomRotation()
     {
-        float randomAngle = Random.Range(minRotationAngle, maxRotationAngle);
-        if (Random.value > 0.5f) randomAngle *= -1; // 50% chance to rotate opposite direction
-
+        float randomAngle = UnityEngine.Random.Range(minRotationAngle, maxRotationAngle);
+        if (UnityEngine.Random.value > 0.5f) randomAngle *= -1;
         _targetRotation = transform.rotation * Quaternion.Euler(0, randomAngle, 0);
     }
 
     private void SelectRandomCube()
     {
-        // Reset all cubes to default color
         for (var i = 0; i < gridCubes.Count; i++)
         {
             gridCubes[i].GetComponent<Renderer>().material.color =
                 i % 2 == 0 ? _defaultAltColor : defaultColor;
         }
 
-        int randomIndex = Random.Range(0, gridCubes.Count);
+        int randomIndex = UnityEngine.Random.Range(0, gridCubes.Count);
         _currentTarget = gridCubes[randomIndex];
         _currentTarget.GetComponent<Renderer>().material.color = targetColor;
+    }
+
+    public float GetCurrentRoundTime()
+    {
+        return _isRoundActive ? Time.time - _roundStartTime : 0f;
+    }
+
+    public int GetCurrentRound()
+    {
+        return _currentRound;
+    }
+
+    public bool IsRoundActive()
+    {
+        return _isRoundActive;
+    }
+
+    public int GetPressesPerRound()
+    {
+        return pressesPerRound;
+    }
+    void ResetViewOnstarted(InputAction.CallbackContext obj)
+    {
+        List<XRInputSubsystem> subsystems = new List<XRInputSubsystem>();
+        SubsystemManager.GetInstances(subsystems);
+        foreach (var subsystem in subsystems)
+        {
+            subsystem?.TryRecenter();
+        }
+        XROrigin origin = FindObjectOfType<XROrigin>();
+        origin?.MatchOriginUpCameraForward(Vector3.up, Vector3.forward);
     }
 }
