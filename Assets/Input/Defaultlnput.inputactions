@@ -1,0 +1,54 @@
+{
+    "name": "Defaultlnput",
+    "maps": [
+        {
+            "name": "Default",
+            "id": "884fb40b-1afe-4210-8f4e-33fac5610d8c",
+            "actions": [
+                {
+                    "name": "ResetView",
+                    "type": "Button",
+                    "id": "70e1fe09-b117-4315-8a88-1e510c6a11ff",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "StartNewRound",
+                    "type": "Button",
+                    "id": "8e1f27d0-f85f-4ccd-a509-371577f5a279",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "70e52890-d575-4fdc-bcf4-ce169c6da148",
+                    "path": "<XRController>/secondaryButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ResetView",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "365863c0-06b3-422a-a18e-c2c392bf46fd",
+                    "path": "<XRController>/{PrimaryButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StartNewRound",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
