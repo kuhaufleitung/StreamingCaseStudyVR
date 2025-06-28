@@ -83,7 +83,6 @@ public class FieldManager : MonoBehaviour
     {
         if (!_isRoundActive) return;
 
-        // Handle rotation
         if (_isRotating)
         {
             RotateTiles();

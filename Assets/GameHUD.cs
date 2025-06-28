@@ -51,7 +51,7 @@ public class GameHUD : MonoBehaviour
         hudPanel.transform.position = Vector3.Lerp(
             hudPanel.transform.position,
             hudPosition,
-            Time.deltaTime * 10f // Adjust smoothness
+            Time.deltaTime * 10f
         );
 
         Quaternion targetRotation = Quaternion.LookRotation(
