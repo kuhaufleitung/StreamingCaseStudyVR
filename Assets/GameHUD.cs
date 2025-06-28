@@ -22,7 +22,6 @@ public class GameHUD : MonoBehaviour
         _mainCamera = Camera.main;
         _isXR = XRSettings.enabled;
 
-        // Subscribe to events
         if (fieldManager != null)
         {
             fieldManager.OnRoundStart += OnRoundStart;
@@ -35,10 +34,8 @@ public class GameHUD : MonoBehaviour
     {
         if (!_isXR || fieldManager == null || !fieldManager.IsRoundActive()) return;
 
-        // Update time display continuously
         timeText.text = $"Time: {fieldManager.GetCurrentRoundTime():F1}s";
 
-        // Position HUD in VR/AR space
         PositionHUD();
     }
 
@@ -46,27 +43,22 @@ public class GameHUD : MonoBehaviour
     {
         if (_mainCamera == null) return;
 
-        // Calculate position with vertical offset
         Vector3 hudPosition = _mainCamera.transform.position +
                               _mainCamera.transform.forward * hudDistance;
 
-        // Apply vertical offset relative to camera's up direction
         hudPosition += _mainCamera.transform.up * hudHeight;
 
-        // Smooth movement (optional)
         hudPanel.transform.position = Vector3.Lerp(
             hudPanel.transform.position,
             hudPosition,
             Time.deltaTime * 10f // Adjust smoothness
         );
 
-        // Match camera's pitch and yaw, but ignore roll
         Quaternion targetRotation = Quaternion.LookRotation(
             _mainCamera.transform.position - hudPanel.transform.position,
             Vector3.up
         );
 
-        // Flip 180 degrees to face player
         hudPanel.transform.rotation = targetRotation * Quaternion.Euler(0, 180, 0);
     }
 
@@ -78,7 +70,6 @@ public class GameHUD : MonoBehaviour
 
     private void OnRoundComplete(float time)
     {
-        // Optional: Show final time differently
         timeText.text = $"Completed: {time:F2}s";
     }
 
@@ -89,7 +80,6 @@ public class GameHUD : MonoBehaviour
 
     private void OnDestroy()
     {
-        // Clean up event subscriptions
         if (fieldManager != null)
         {
             fieldManager.OnRoundStart -= OnRoundStart;
