@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.hololight.stream": "file:C:/Users/Win11Gaming/Downloads/Hololight_Stream_2025.0.0_Trial_Version_for_Unity/Hololight Stream 2025.0 Trial Version for Unity/Packages/com.hololight.stream-2025.0.0.tgz",
     "com.microsoft.mixedreality.openxr": "file:MixedReality/com.microsoft.mixedreality.openxr-1.11.2.tgz",
     "com.unity.collab-proxy": "2.8.2",
     "com.unity.device-simulator.devices": "1.0.0",

@@ -9,6 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects:
+    Hololight.Stream.XRSettings: {fileID: 11400000, guid: ab8fd876562b54e42af55a5ecf8a84c2, type: 2}
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 957f0d87c16d9254199cfa2c2a4b84cb, type: 2}
     com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: 68cbc23ff95ed214ca3ed8f74e921d8c, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 84f9659380135a145a3699753416c8f9, type: 2}

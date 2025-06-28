@@ -1,5 +1,16 @@
 {
   "dependencies": {
+    "com.hololight.stream": {
+      "version": "file:C:/Users/Win11Gaming/Downloads/Hololight_Stream_2025.0.0_Trial_Version_for_Unity/Hololight Stream 2025.0 Trial Version for Unity/Packages/com.hololight.stream-2025.0.0.tgz",
+      "depth": 0,
+      "source": "local-tarball",
+      "dependencies": {
+        "com.unity.xr.management": "3.2.13",
+        "com.unity.nuget.newtonsoft-json": "3.0.2",
+        "com.unity.inputsystem": "1.8.2",
+        "com.unity.xr.arfoundation": "5.0.5"
+      }
+    },
     "com.microsoft.mixedreality.openxr": {
       "version": "file:MixedReality/com.microsoft.mixedreality.openxr-1.11.2.tgz",
       "depth": 0,
@@ -89,6 +100,13 @@
     },
     "com.unity.mathematics": {
       "version": "1.2.6",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.nuget.newtonsoft-json": {
+      "version": "3.2.1",
       "depth": 1,
       "source": "registry",
       "dependencies": {},
