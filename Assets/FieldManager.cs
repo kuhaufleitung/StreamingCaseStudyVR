@@ -8,7 +8,7 @@ using UnityEngine.XR;
 public class FieldManager : MonoBehaviour
 {
     [Header("Tile Settings")]
-    [SerializeField] private List<GameObject> gridCubes = new List<GameObject>();
+    [SerializeField] private List<GameObject> gridCubes = new();
     [SerializeField] private Color targetColor = Color.red;
     [SerializeField] private Color defaultColor = Color.white;
     private readonly Color _defaultAltColor = Color.grey;
@@ -19,8 +19,8 @@ public class FieldManager : MonoBehaviour
     [Header("Rotation Settings")]
     [SerializeField] private float rotationSpeed = 10f;
     [SerializeField] private float rotationDuration = 2f;
-    [SerializeField] private float minRotationAngle = 45f;
-    [SerializeField] private float maxRotationAngle = 90f;
+    [SerializeField] private float minRotationAngle = 30f;
+    [SerializeField] private float maxRotationAngle = 70f;
 
     private DefaultInputXR _input;
 
@@ -131,7 +131,7 @@ public class FieldManager : MonoBehaviour
         SetNewRandomRotation();
         _isRotating = true;
         _rotationTimer = 0f;
-        Invoke(nameof(SelectRandomCube), rotationDuration * 0.8f);
+        SelectRandomCube();
     }
 
     private void SetNewRandomRotation()
