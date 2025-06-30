@@ -22,6 +22,8 @@ public class FieldManager : MonoBehaviour
     [SerializeField] private float minRotationAngle = 30f;
     [SerializeField] private float maxRotationAngle = 70f;
 
+    private AudioSource _audioSource;
+
     private DefaultInputXR _input;
 
 
@@ -43,6 +45,13 @@ public class FieldManager : MonoBehaviour
     public event Action<float> OnRoundComplete;
     public event Action<int> OnPressUpdate;
 
+    private void Awake()
+    {
+        _audioSource = GetComponent<AudioSource>();
+        if (_audioSource == null)
+            _audioSource = gameObject.AddComponent<AudioSource>();
+    }
+
     private void Start()
     {
         if (gridCubes.Count == 0)
@@ -53,11 +62,12 @@ public class FieldManager : MonoBehaviour
         _input = new DefaultInputXR();
         _input.Default.Enable();
         _input.Default.ResetView.started += ResetViewOnstarted;
-        _input.Default.StartNewRound.started += StartNewRound;
     }
 
-    public void StartNewRound(InputAction.CallbackContext ctx)
+    public void StartNewRound()
     {
+        if (_isRoundActive) return;
+        _audioSource.PlayOneShot(CreateTone());
         _currentRound++;
         _pressesInRound = 0;
         _roundStartTime = Time.time;
@@ -184,4 +194,20 @@ public class FieldManager : MonoBehaviour
         XROrigin origin = FindObjectOfType<XROrigin>();
         origin?.MatchOriginUpCameraForward(Vector3.up, Vector3.forward);
     }
+
+    AudioClip CreateTone(float frequency = 440f, float duration = 0.2f)
+    {
+        int samples = (int)(duration * AudioSettings.outputSampleRate);
+        AudioClip clip = AudioClip.Create("Tone", samples, 1,
+            AudioSettings.outputSampleRate, false);
+        float[] data = new float[samples];
+        for (int i = 0; i < data.Length; i++)
+        {
+            data[i] = Mathf.Sin(2 * Mathf.PI * frequency * i /
+                                AudioSettings.outputSampleRate);
+        }
+        clip.SetData(data, 0);
+        return clip;
+    }
+
 }

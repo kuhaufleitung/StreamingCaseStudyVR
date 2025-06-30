@@ -13,6 +13,7 @@ public class GameHUD : MonoBehaviour
     [SerializeField] private Canvas hudPanel;
     [SerializeField] private float hudDistance = 1.5f;
     [SerializeField] private float hudHeight = 0.3f;
+    [SerializeField] private GameObject button;
 
     private Camera _mainCamera;
     private bool _isXR;
@@ -60,6 +61,7 @@ public class GameHUD : MonoBehaviour
         );
 
         hudPanel.transform.rotation = targetRotation * Quaternion.Euler(0, 180, 0);
+        button.transform.rotation = hudPanel.transform.rotation;
     }
 
     private void OnRoundStart()
