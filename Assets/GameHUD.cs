@@ -8,21 +8,12 @@ public class GameHUD : MonoBehaviour
     [Header("References")]
     [SerializeField] private TMP_Text timeText;
     [SerializeField] private TMP_Text progressText;
-    [SerializeField] private TMP_Text roundText;
     [SerializeField] private FieldManager fieldManager;
-    [SerializeField] private Canvas hudPanel;
     [SerializeField] private float hudDistance = 1.5f;
     [SerializeField] private float hudHeight = 0.3f;
-    [SerializeField] private GameObject button;
-
-    private Camera _mainCamera;
-    private bool _isXR;
 
     private void Awake()
     {
-        _mainCamera = Camera.main;
-        _isXR = XRSettings.enabled;
-
         if (fieldManager != null)
         {
             fieldManager.OnRoundStart += OnRoundStart;
@@ -33,40 +24,12 @@ public class GameHUD : MonoBehaviour
 
     private void Update()
     {
-        if (!_isXR || fieldManager == null || !fieldManager.IsRoundActive()) return;
+        if (fieldManager == null || !fieldManager.IsRoundActive()) return;
 
         timeText.text = $"Time: {fieldManager.GetCurrentRoundTime():F1}s";
-
-        PositionHUD();
     }
-
-    private void PositionHUD()
-    {
-        if (_mainCamera == null) return;
-
-        Vector3 hudPosition = _mainCamera.transform.position +
-                              _mainCamera.transform.forward * hudDistance;
-
-        hudPosition += _mainCamera.transform.up * hudHeight;
-
-        hudPanel.transform.position = Vector3.Lerp(
-            hudPanel.transform.position,
-            hudPosition,
-            Time.deltaTime * 10f
-        );
-
-        Quaternion targetRotation = Quaternion.LookRotation(
-            _mainCamera.transform.position - hudPanel.transform.position,
-            Vector3.up
-        );
-
-        hudPanel.transform.rotation = targetRotation * Quaternion.Euler(0, 180, 0);
-        button.transform.rotation = hudPanel.transform.rotation;
-    }
-
     private void OnRoundStart()
     {
-        roundText.text = $"Round: {fieldManager.GetCurrentRound()}";
         UpdateProgress(0);
     }
 

@@ -22,6 +22,7 @@ public class FieldManager : MonoBehaviour
     [SerializeField] private float minRotationAngle = 30f;
     [SerializeField] private float maxRotationAngle = 70f;
 
+    [SerializeField] private GameObject hud;
     private AudioSource _audioSource;
 
     private DefaultInputXR _input;
@@ -37,9 +38,9 @@ public class FieldManager : MonoBehaviour
     private bool _isRoundActive = false;
 
     // Rotation state
-    private Quaternion _targetRotation;
-    private bool _isRotating;
-    private float _rotationTimer;
+    public Quaternion targetRotation { get; set; }
+    public bool isRotating { get; set; }
+    public float rotationTimer { get; set; }
 
     public event Action OnRoundStart;
     public event Action<float> OnRoundComplete;
@@ -93,7 +94,7 @@ public class FieldManager : MonoBehaviour
     {
         if (!_isRoundActive) return;
 
-        if (_isRotating)
+        if (isRotating)
         {
             RotateTiles();
         }
@@ -101,25 +102,28 @@ public class FieldManager : MonoBehaviour
 
     private void RotateTiles()
     {
-        _rotationTimer += Time.deltaTime;
+        rotationTimer += Time.deltaTime;
 
         transform.rotation = Quaternion.Slerp(
             transform.rotation,
-            _targetRotation,
+            targetRotation,
             rotationSpeed * Time.deltaTime
         );
 
-        if (_rotationTimer >= rotationDuration ||
-            Quaternion.Angle(transform.rotation, _targetRotation) < 0.1f)
+        hud.transform.rotation = transform.rotation;
+
+        if (rotationTimer >= rotationDuration ||
+            Quaternion.Angle(transform.rotation, targetRotation) < 0.1f)
         {
-            _isRotating = false;
-            transform.rotation = _targetRotation;
+            isRotating = false;
+            transform.rotation = targetRotation;
+            hud.transform.rotation = targetRotation;
         }
     }
 
     public void HandleCubeSelection(GameObject selectedCube)
     {
-        if (!_isRoundActive || _currentTarget == null || _isRotating) return;
+        if (!_isRoundActive || _currentTarget == null || isRotating) return;
 
         if (selectedCube != _currentTarget) return;
 
@@ -139,8 +143,8 @@ public class FieldManager : MonoBehaviour
     private void StartRotationAndSelectNewCube()
     {
         SetNewRandomRotation();
-        _isRotating = true;
-        _rotationTimer = 0f;
+        isRotating = true;
+        rotationTimer = 0f;
         SelectRandomCube();
     }
 
@@ -148,7 +152,7 @@ public class FieldManager : MonoBehaviour
     {
         float randomAngle = UnityEngine.Random.Range(minRotationAngle, maxRotationAngle);
         if (UnityEngine.Random.value > 0.5f) randomAngle *= -1;
-        _targetRotation = transform.rotation * Quaternion.Euler(0, randomAngle, 0);
+        targetRotation = transform.rotation * Quaternion.Euler(0, randomAngle, 0);
     }
 
     private void SelectRandomCube()
