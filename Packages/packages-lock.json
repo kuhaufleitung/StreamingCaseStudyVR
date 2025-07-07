@@ -11,6 +11,19 @@
         "com.unity.xr.arfoundation": "5.0.5"
       }
     },
+    "com.hololight.stream.mrtk3": {
+      "version": "file:C:/Users/Win11Gaming/Downloads/Hololight_Stream_2025.0.0_Trial_Version_for_Unity/Hololight Stream 2025.0 Trial Version for Unity/Packages/com.hololight.stream.mrtk3-2025.0.0.tgz",
+      "depth": 0,
+      "source": "local-tarball",
+      "dependencies": {
+        "com.unity.xr.management": "3.2.13",
+        "com.hololight.stream": "2025.0.0",
+        "org.mixedrealitytoolkit.core": "3.0.1",
+        "org.mixedrealitytoolkit.input": "3.0.0",
+        "org.mixedrealitytoolkit.uxcore": "3.0.0",
+        "org.mixedrealitytoolkit.standardassets": "3.0.0"
+      }
+    },
     "com.microsoft.mixedreality.openxr": {
       "version": "file:MixedReality/com.microsoft.mixedreality.openxr-1.11.2.tgz",
       "depth": 0,

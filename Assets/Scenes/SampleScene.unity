@@ -368,6 +368,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: MRTK XR Rig
       objectReference: {fileID: 0}
+    - target: {fileID: 4160709927669568829, guid: acbf65a81ce2cf94f82a0809298acf70, type: 3}
+      propertyPath: m_ActionAssets.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4160709927669568829, guid: acbf65a81ce2cf94f82a0809298acf70, type: 3}
+      propertyPath: m_ActionAssets.Array.data[1]
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: cac6ec8655fe952458a087919a29134c, type: 3}
     - target: {fileID: 5014890476555833763, guid: acbf65a81ce2cf94f82a0809298acf70, type: 3}
       propertyPath: m_TagString
       value: Hand
@@ -387,8 +395,50 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2351505567455720334, guid: acbf65a81ce2cf94f82a0809298acf70, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 595983727}
   m_SourcePrefab: {fileID: 100100000, guid: acbf65a81ce2cf94f82a0809298acf70, type: 3}
+--- !u!1 &595983723 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2351505567455720334, guid: acbf65a81ce2cf94f82a0809298acf70, type: 3}
+  m_PrefabInstance: {fileID: 222960762}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &595983727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 595983723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cb23e4ad0525d54dbfdef6989af7bb7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Quest2ControllerPrefabLeft: {fileID: 2713518416307116232, guid: 8e79a8fcf997dc3469e4652e5f51ddcd, type: 3}
+  Quest2ControllerPrefabRight: {fileID: 7282685443104168602, guid: 93861b974e7702649a9d57caadfbcbc4, type: 3}
+  QuestProControllerPrefabLeft: {fileID: 5655099901306996158, guid: ab2ae23376adf3d48ac3c3e995db9aaa, type: 3}
+  QuestProControllerPrefabRight: {fileID: 8064676701988238944, guid: ce5593ea3b89f1f40a89e6d3d40e61c1, type: 3}
+  Quest3ControllerPrefabLeft: {fileID: 5179398810520702070, guid: dd9a37fe100c25c4c8241dad905fdf0b, type: 3}
+  Quest3ControllerPrefabRight: {fileID: 5640014542545232262, guid: e7a87c6c3b17e174caf1e92888fa3ef3, type: 3}
+  MagicLeap2ControllerPrefabLeft: {fileID: 7906713537206853640, guid: deb0d35239d3b0f42bdb27202d9142be, type: 3}
+  MagicLeap2ControllerPrefabRight: {fileID: 7906713537206853640, guid: 998f39dbd08ea9f4e97b7d7f8ed87487, type: 3}
+  LenovoVRXControllerPrefabLeft: {fileID: 4365285319684715081, guid: 70d86268ff2e0e24ebf63054b8c91eaf, type: 3}
+  LenovoVRXControllerPrefabRight: {fileID: 2523028236063121308, guid: d48df65a3342fa541b9cc8dfcecf7532, type: 3}
+  Pico4UltraControllerPrefabLeft: {fileID: 5160734707760153619, guid: d600af752179d4343b26d6d3eab89e8d, type: 3}
+  Pico4UltraControllerPrefabRight: {fileID: 2641197622611298662, guid: ab854e81d8fcde04eb1603f397457afc, type: 3}
+  HTCViveFocus3ControllerPrefabLeft: {fileID: 5904097626624130796, guid: ddf92eac99e419a4abfcc821eda48ac8, type: 3}
+  HTCViveFocus3ControllerPrefabRight: {fileID: 2716359063375171831, guid: 6569a30c4c74b824597f231f6bc11064, type: 3}
+  HTCViveFocusVisionControllerPrefabLeft: {fileID: 5904097626624130796, guid: ddf92eac99e419a4abfcc821eda48ac8, type: 3}
+  HTCViveFocusVisionControllerPrefabRight: {fileID: 2716359063375171831, guid: 6569a30c4c74b824597f231f6bc11064, type: 3}
+  Quest3SControllerPrefabLeft: {fileID: 5179398810520702070, guid: dd9a37fe100c25c4c8241dad905fdf0b, type: 3}
+  Quest3SControllerPrefabRight: {fileID: 5640014542545232262, guid: e7a87c6c3b17e174caf1e92888fa3ef3, type: 3}
+  LogitechMXInkStylusPrefabLeft: {fileID: 4991077348106539874, guid: f616693b8f17c8d4098fe5c9794218a8, type: 3}
+  LogitechMXInkStylusPrefabRight: {fileID: 4991077348106539874, guid: a5396c4b7d56adf4db0cce61ec24158c, type: 3}
+  HTCViveXREliteControllerPrefabLeft: {fileID: 0}
+  HTCViveXREliteControllerPrefabRight: {fileID: 0}
 --- !u!1 &630291201
 GameObject:
   m_ObjectHideFlags: 0
